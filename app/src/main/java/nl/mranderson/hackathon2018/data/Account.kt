@@ -1,3 +1,4 @@
 package nl.mranderson.hackathon2018.data
 
-class Account
+data class Account(val iban: String,
+                   val balance: Int)
