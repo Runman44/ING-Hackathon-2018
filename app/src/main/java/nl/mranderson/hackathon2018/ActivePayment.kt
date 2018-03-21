@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_active_payment.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
+import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Transaction
 
 const val KEY_TRANSACTION = "transaction"
@@ -36,16 +37,17 @@ class ActivePayment : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         val transaction = intent.getParcelableExtra<Transaction>(KEY_TRANSACTION);
 
-        paymentTotal.text = "${transaction.amount.currency} ${(transaction.amount.valueInCents / 100.0f)}"
+        paymentTotal.text = getAmountString(transaction.amount)
 
         Handler().postDelayed({
             showResults(transaction)
         }, 2000)
-
     }
+
+    private fun getAmountString(amount: Amount): String =
+            getString(R.string.amount_value_dynamic, amount.currency, (amount.valueInCents / 100.0f))
 
     companion object {
         @JvmStatic

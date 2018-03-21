@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_split_payment_screen.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
+import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Transaction
 
 class PaymentResult : AppCompatActivity() {
@@ -30,18 +31,19 @@ class PaymentResult : AppCompatActivity() {
 
     private fun populateAmounts(transaction: Transaction) {
         transaction.let {
-            total_amt.text = "${it.amount.currency} ${(it.amount.valueInCents / 100.0f)}"
+            total_amt.text = getAmountString(it.amount)
 
             val corporateAmount = transaction.card.rules.amount
 
-            val personalAmount = it.amount.valueInCents - corporateAmount.valueInCents
+            val personalAmount = Amount(it.amount.valueInCents - corporateAmount.valueInCents)
 
-            corporate_amt_value.text = "${corporateAmount.currency} ${(corporateAmount.valueInCents / 100.00f)}"
-            personal_amt_value.text = if (personalAmount > 0) {
-                "${corporateAmount.currency} ${(personalAmount / 100.00f)}"
-            } else getString(R.string.amount_value, "0.00")
+            corporate_amt_value.text = getAmountString(corporateAmount)
+            personal_amt_value.text = if (personalAmount.valueInCents > 0) getAmountString(personalAmount) else getString(R.string.amount_value, "0.00")
         }
     }
+
+    private fun getAmountString(amount: Amount): String =
+            getString(R.string.amount_value_dynamic, amount.currency, (amount.valueInCents / 100.0f))
 
     companion object {
         @JvmStatic
