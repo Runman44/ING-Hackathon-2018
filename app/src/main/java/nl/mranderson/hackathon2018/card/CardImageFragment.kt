@@ -13,6 +13,5 @@ class CardImageFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_card_image, container, false)
     }
-
 }
 
