@@ -35,6 +35,15 @@ class ActivePayment : AppCompatActivity() {
         startActivity(PaymentResult.createIntent(this), options.toBundle())
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val transaction = intent.getParcelableExtra<Transaction>(KEY_TRANSACTION);
+
+        paymentTotal.text = "${transaction.amount.currency} ${(transaction.amount.valueInCents / 100.0f)}"
+
+    }
+
     companion object {
         private val KEY_TRANSACTION = "transaction"
 

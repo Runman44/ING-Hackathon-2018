@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Amount(val valueInCents: Int) : Parcelable
+data class Amount (val valueInCents: Int, val currency: String = "€") : Parcelable
