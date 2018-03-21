@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_split_payment.*
 import nl.mranderson.hackathon2018.R
+import java.math.BigDecimal
 
 class PaymentResultSplitFragment : Fragment() {
 
@@ -42,8 +43,10 @@ class PaymentResultSplitFragment : Fragment() {
 
     private fun populateAmounts(amountData: SplitPaymentData?) {
         amountData?.let {
-            corporate_amt.text = "€" + it.corporateAmount
-            personal_amt.text = "€" + it.personalAmount
+            val totalAmount = BigDecimal(it.corporateAmount) + BigDecimal(it.personalAmount)
+            total_amt.text = getString(R.string.amount_value, totalAmount.toString())
+            corporate_amt.text = getString(R.string.amount_value, it.corporateAmount)
+            personal_amt.text = getString(R.string.amount_value, it.personalAmount)
         }
     }
 

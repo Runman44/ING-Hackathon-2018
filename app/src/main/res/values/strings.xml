@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Fusion</string>
     <string name="app_text">Why is this project called mr anderson!?!</string>
+
+    <string name="amount_value">€%1$s</string>
 </resources>
