@@ -3,6 +3,7 @@ package nl.mranderson.hackathon2018
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_active_payment.*
@@ -41,6 +42,10 @@ class ActivePayment : AppCompatActivity() {
         val transaction = intent.getParcelableExtra<Transaction>(KEY_TRANSACTION);
 
         paymentTotal.text = "${transaction.amount.currency} ${(transaction.amount.valueInCents / 100.0f)}"
+
+        Handler().postDelayed({
+            startActivity(PaymentResult.createIntent(this))
+        }, 5000)
 
     }
 

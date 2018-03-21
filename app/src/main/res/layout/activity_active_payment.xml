@@ -19,13 +19,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@drawable/text_background"
+        android:padding="16dp"
         android:textSize="48sp"
         android:textStyle="bold"
         android:transitionName="@string/total_amount_transition_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardFragment"
-        tools:text="15,24" />
+        tools:text="€ 15,24" />
 
     <ProgressBar
         android:id="@+id/progressBar2"

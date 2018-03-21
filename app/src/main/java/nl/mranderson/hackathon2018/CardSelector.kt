@@ -9,10 +9,10 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
 import nl.mranderson.hackathon2018.data.*
+
+private const val MIME_TEXT_PLAIN = "text/plain"
 
 class CardSelector : AppCompatActivity() {
     private val amountMap = HashMap<String, Amount>()
@@ -78,10 +78,9 @@ class CardSelector : AppCompatActivity() {
 
                 startActivity(
                         ActivePayment.createIntent(this, Transaction(
-                        Card("iban", "account", Rules("rulesid")),
-                        Account("iban", 1000),
-                        transitionAmount)))
-                Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
+                                Card("iban", "account", Rules("rulesid")),
+                                Account("iban", 1000),
+                                transitionAmount)))
             }
         }
     }
