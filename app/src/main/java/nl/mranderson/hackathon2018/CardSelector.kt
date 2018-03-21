@@ -2,6 +2,7 @@ package nl.mranderson.hackathon2018
 
 import android.app.Activity
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NfcAdapter
@@ -34,6 +35,11 @@ class CardSelector : AppCompatActivity() {
 
         // We might be called from the system
         handleIntent(intent)
+    }
+
+    companion object {
+        @JvmStatic
+        fun createIntent(context: Context) = Intent(context, CardSelector::class.java)
     }
 
     override fun onNewIntent(intent: Intent?) {
