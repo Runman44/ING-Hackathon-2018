@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_active_payment.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
 import nl.mranderson.hackathon2018.data.Transaction
+
+const val KEY_TRANSACTION = "transaction"
 
 class ActivePayment : AppCompatActivity() {
 
@@ -25,6 +28,12 @@ class ActivePayment : AppCompatActivity() {
         }
     }
 
+    private fun showResults(transaction: Transaction) {
+        val options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, paymentTotal, paymentTotal.transitionName)
+        startActivity(PaymentResult.createIntent(this, transaction), options.toBundle())
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -32,17 +41,15 @@ class ActivePayment : AppCompatActivity() {
 
         paymentTotal.text = "${transaction.amount.currency} ${(transaction.amount.valueInCents / 100.0f)}"
 
-        Handler().postDelayed( {
-            startActivity(PaymentResult.createIntent(this))
-        }, 5000)
+        Handler().postDelayed({
+            showResults(transaction)
+        }, 2000)
 
     }
 
     companion object {
-        private val KEY_TRANSACTION = "transaction"
-
         @JvmStatic
-        fun createIntent(context: Context, transaction: Transaction) : Intent {
+        fun createIntent(context: Context, transaction: Transaction): Intent {
             return Intent(context, ActivePayment::class.java).also {
                 it.putExtra(KEY_TRANSACTION, transaction)
             }

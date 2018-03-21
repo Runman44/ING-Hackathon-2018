@@ -1,17 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".PaymentResult">
 
     <FrameLayout
-        android:id="@+id/card_fragment_container"
+        android:id="@+id/cardFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/cardFragment"
+        android:paddingBottom="10dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/total_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/text_background"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:transitionName="@string/total_amount_transition_name"
+            tools:text="€ 15,24" />
+
+        <TextView
+            android:id="@+id/corporate_amt_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/total_amt"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="€ 5,00" />
+
+        <TextView
+            android:id="@+id/corporate_amt_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/corporate_amt_value"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/corporate_amt_label"
+            android:textSize="15sp"
+            tools:text="@string/corporate_amt_label" />
+
+        <TextView
+            android:id="@+id/personal_amt_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/total_amt"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="€ 10,24" />
+
+        <TextView
+            android:id="@+id/personal_amt_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/corporate_amt_label"
+            android:layout_alignBottom="@+id/corporate_amt_label"
+            android:layout_alignStart="@+id/personal_amt_value"
+            android:text="@string/personal_amt_label"
+            android:textSize="15sp"
+            tools:text="@string/personal_amt_label" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

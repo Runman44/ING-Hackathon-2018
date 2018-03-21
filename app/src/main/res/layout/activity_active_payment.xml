@@ -10,21 +10,23 @@
         android:id="@+id/cardFragment"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/paymentTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/cardFragment"
+        android:background="@drawable/text_background"
+        android:padding="16dp"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:transitionName="@string/total_amount_transition_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="48sp"
-        android:padding="16dp"
-        android:background="@drawable/text_background"
+        app:layout_constraintTop_toBottomOf="@id/cardFragment"
         tools:text="€ 15,24" />
 
     <ProgressBar

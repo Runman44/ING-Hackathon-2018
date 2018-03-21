@@ -9,6 +9,8 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.transition.Explode
+import android.view.Window
 import nl.mranderson.hackathon2018.card.CardFragment
 import nl.mranderson.hackathon2018.data.*
 
@@ -28,6 +30,14 @@ class CardSelector : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+
+            // set an exit transition
+            exitTransition = Explode()
+        }
+
         setContentView(R.layout.activity_card_selector)
 
         val fragment: CardFragment
