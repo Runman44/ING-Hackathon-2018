@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Rules(val name: String, val accumulate : Boolean, val amount: Amount, val week : Week) : Parcelable
+data class Week(val monday: Boolean, val tuesday: Boolean, val wednesday: Boolean, val thursday: Boolean, val friday: Boolean, val saturday: Boolean, val sunday: Boolean) : Parcelable
