@@ -13,8 +13,6 @@ import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
 import nl.mranderson.hackathon2018.data.*
 
-
-
 private const val MIME_TEXT_PLAIN = "text/plain"
 
 class CardSelector : AppCompatActivity() {

@@ -12,26 +12,33 @@ class CardInteractor : CardContract.Interactor {
         return Single.create {
 
             val mAuth = FirebaseAuth.getInstance()
-            val currentUser = mAuth.currentUser
-            val id = currentUser?.uid
-
-            val db = FirebaseFirestore.getInstance()
-
-
-            db.collection("cards")
-                    .get()
-                    .addOnCompleteListener { task ->
+            var id : String?
+            mAuth.signInWithEmailAndPassword("test@ing.com", "hack123")
+                    .addOnCompleteListener({ task ->
                         if (task.isSuccessful) {
-                            for (document in task.result) {
-                                Log.d("TAG", document.id + " => " + document.data)
-                            }
-                        } else {
-//                            Log.w(TAG, "Error getting documents.", task.exception)
-                        }
-                    }
+                            Log.d("SAYWUT", "YES")
+                            // Sign in success, update UI with the signed-in user's information
+                            val user = mAuth.currentUser
+                            id = user?.uid
 
-            val response = CardResponse()
-            it.onSuccess(response)
+                            val db = FirebaseFirestore.getInstance()
+                            val citiesRef = db.collection("cards")
+                            // Create a query against the collection.
+                            val query = citiesRef.whereEqualTo("authId", id)
+
+                            query.get().addOnCompleteListener({ task2 ->
+                                if (task2.isSuccessful) {
+                                    for (document in task2.result) {
+                                        Log.d("SAYWUT", document.id + " => " + document.data)
+                                        val response = CardResponse()
+                                        it.onSuccess(response)
+                                    }
+                                }
+                            })
+                        } else {
+                            Log.d("SAYWUT", "FAILED")
+                        }
+                    })
         }
     }
 }

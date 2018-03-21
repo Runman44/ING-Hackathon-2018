@@ -33,6 +33,8 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
+        <activity android:name=".login.LoginActivity">
+        </activity>
         <activity android:name=".ActivePayment">
         </activity>
         <activity android:name=".PaymentResult" />
