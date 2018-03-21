@@ -23,17 +23,17 @@ class CardInteractor : CardContract.Interactor {
                         rulesRef.get().addOnCompleteListener({ task2 ->
                             if (task2.isSuccessful) {
 
-                                val week = Week(task.result.documents[0].get("monday") as Boolean,
-                                        task.result.documents[0].get("tuesday") as Boolean,
-                                        task.result.documents[0].get("wednesday") as Boolean,
-                                        task.result.documents[0].get("thursday") as Boolean,
-                                        task.result.documents[0].get("friday") as Boolean,
-                                        task.result.documents[0].get("saturday") as Boolean,
-                                        task.result.documents[0].get("sunday") as Boolean)
+                                val week = Week(task2.result.get("monday") as Boolean,
+                                        task2.result.get("tuesday") as Boolean,
+                                        task2.result.get("wednesday") as Boolean,
+                                        task2.result.get("thursday") as Boolean,
+                                        task2.result.get("friday") as Boolean,
+                                        task2.result.get("saturday") as Boolean,
+                                        task2.result.get("sunday") as Boolean)
 
-                                val rule = Rules(task.result.documents[0].get("name") as String,
-                                        task.result.documents[0].get("accumulate") as Boolean,
-                                        Amount(task.result.documents[0].get("amount") as Int),
+                                val rule = Rules(task2.result.get("name") as String,
+                                        task2.result.get("accumulate") as Boolean,
+                                        Amount((task2.result.get("amount") as String).toInt()),
                                 week)
 
                                 cards.add(Card("accountId", "iban", rule))
