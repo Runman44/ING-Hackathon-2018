@@ -25,6 +25,10 @@ android {
             }
         }
     }
+    androidExtensions {
+        experimental = true
+    }
+
     buildToolsVersion '27.0.3'
 }
 
