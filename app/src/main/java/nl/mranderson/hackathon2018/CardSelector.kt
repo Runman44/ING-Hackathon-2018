@@ -88,7 +88,7 @@ class CardSelector : AppCompatActivity() {
 
                 startActivity(
                         ActivePayment.createIntent(this, Transaction(
-                                Card("iban", "account", Rules("name", false, Amount(5), Week(false, false, false, false, false, false, false))),
+                                Card("iban", "account", Rules("name", false, Amount(500), Week(false, false, false, false, false, false, false))),
                                 Account("iban", 1000),
                                 transitionAmount)))
             }
