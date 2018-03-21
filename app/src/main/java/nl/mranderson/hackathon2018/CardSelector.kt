@@ -9,6 +9,7 @@ import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import nl.mranderson.hackathon2018.card.CardFragment
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -19,6 +20,15 @@ class CardSelector : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_selector)
+
+        val fragment: CardFragment
+        if (savedInstanceState == null) {
+            fragment = CardFragment()
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.cardFragment, fragment, "CARDTAG")
+                    .commit()
+        }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
@@ -39,7 +49,7 @@ class CardSelector : AppCompatActivity() {
         stopForegroundDispatch(this, nfcAdapter)
     }
 
-    private fun handleIntent(intent : Intent) {
+    private fun handleIntent(intent: Intent) {
         when (intent.action) {
             NfcAdapter.ACTION_NDEF_DISCOVERED, NfcAdapter.ACTION_TECH_DISCOVERED, NfcAdapter.ACTION_TAG_DISCOVERED -> {
                 Toast.makeText(this, "Found NFC tag", Toast.LENGTH_SHORT).show()
