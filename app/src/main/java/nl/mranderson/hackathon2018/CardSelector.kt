@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
+import nl.mranderson.hackathon2018.data.*
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -65,7 +66,11 @@ class CardSelector : AppCompatActivity() {
             NfcAdapter.ACTION_NDEF_DISCOVERED, NfcAdapter.ACTION_TECH_DISCOVERED, NfcAdapter.ACTION_TAG_DISCOVERED -> {
                 val tagId = intent.extras.getByteArray(NfcAdapter.EXTRA_ID)
                 val tagTag: Tag = intent.extras.getParcelable(NfcAdapter.EXTRA_TAG)
-                startActivity(ActivePayment.createIntent(this))
+                startActivity(
+                        ActivePayment.createIntent(this, Transaction(
+                        Card("iban", "account", Rules()),
+                        Account("iban", 1000),
+                        Amount(30))))
                 Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
             }
         }
