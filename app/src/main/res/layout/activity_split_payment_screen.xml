@@ -24,10 +24,11 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/text_background"
             android:gravity="center_horizontal"
+            android:padding="16dp"
             android:textSize="48sp"
             android:textStyle="bold"
             android:transitionName="@string/total_amount_transition_name"
-            tools:text="15,24" />
+            tools:text="€ 15,24" />
 
         <TextView
             android:id="@+id/corporate_amt"

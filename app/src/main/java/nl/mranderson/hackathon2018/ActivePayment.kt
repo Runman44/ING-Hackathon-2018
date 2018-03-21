@@ -29,7 +29,6 @@ class ActivePayment : AppCompatActivity() {
     }
 
     private fun showResults(transaction: Transaction) {
-        paymentTotal.text = getString(R.string.amount_value, "7.00")
         val options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, paymentTotal, paymentTotal.transitionName)
         startActivity(PaymentResult.createIntent(this, transaction), options.toBundle())
