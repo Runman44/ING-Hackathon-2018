@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 
 class SplitPaymentViewState {
-    var data = MutableLiveData<List<Any?>>()
+    var data = MutableLiveData<SplitPaymentData>()
+    var isFailed = MutableLiveData<Boolean>()
 }
 
 @Suppress("UNCHECKED_CAST")

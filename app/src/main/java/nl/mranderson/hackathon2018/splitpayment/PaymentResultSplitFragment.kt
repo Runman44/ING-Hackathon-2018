@@ -1,5 +1,7 @@
 package nl.mranderson.hackathon2018.splitpayment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -16,25 +18,33 @@ class PaymentResultSplitFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_split_payment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun bindViews() {
+        viewModel.viewState.data.observe(this, Observer { data -> populateAmounts(data) })
+        viewModel.viewState.isFailed.observe(this, Observer { isFailed -> showFailedState(isFailed) })
+    }
 
-        val viewState = SplitPaymentViewState()
+    private fun showFailedState(failed: Boolean?) {
+        // TODO show failed view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         val amountData = arguments?.getParcelable<SplitPaymentData>("paymentData")
+        val viewState = SplitPaymentViewState()
+        val presenter = SplitPaymentPresenter(viewState, amountData)
+        viewModel = ViewModelProviders.of(this, VideoViewModelFactory(presenter, viewState)).get(SplitPaymentViewModel::class.java)
 
-        amountData?.let {
-            populateAmounts(amountData)
-        }
+        bindViews()
+
+        viewModel.presenter.start()
     }
 
-    private fun populateAmounts(amountData: SplitPaymentData) {
-        corporate_amt.text = amountData.corporateAmount
-        personal_amt.text = amountData.personalAmount
+    private fun populateAmounts(amountData: SplitPaymentData?) {
+        amountData?.let {
+            corporate_amt.text = "€" + it.corporateAmount
+            personal_amt.text = "€" + it.personalAmount
+        }
     }
 
     companion object {

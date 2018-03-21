@@ -1,8 +1,13 @@
 package nl.mranderson.hackathon2018.splitpayment
 
-class SplitPaymentPresenter : SplitPaymentPresenterContract {
+class SplitPaymentPresenter(private val viewState: SplitPaymentViewState, private val amount: SplitPaymentData?) : SplitPaymentPresenterContract {
+
     override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (amount != null) {
+            viewState.data.postValue(amount)
+        } else {
+            viewState.isFailed.postValue(true)
+        }
     }
 
     override fun clear() {
