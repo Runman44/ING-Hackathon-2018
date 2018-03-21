@@ -8,8 +8,8 @@
 
     <FrameLayout
         android:id="@+id/cardFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,6 +22,22 @@
         app:layout_constraintTop_toBottomOf="@id/cardFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="15,24" />
+        android:textSize="48sp"
+        android:padding="16dp"
+        android:background="@drawable/text_background"
+        tools:text="€ 15,24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentTotal" />
 
 </android.support.constraint.ConstraintLayout>

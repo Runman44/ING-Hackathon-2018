@@ -9,15 +9,22 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
 import nl.mranderson.hackathon2018.data.*
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
 class CardSelector : AppCompatActivity() {
+    private val amountMap = HashMap<String, Amount>()
 
     private var nfcAdapter: NfcAdapter? = null
+
+    init {
+        amountMap["F7062D5B"] = Amount(4500) // White card
+        amountMap["CC2583B5"] = Amount(889)
+        amountMap["2C1BD7E2"] = Amount(245)
+        amountMap["EC1C6AB5"] = Amount(1231)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +73,14 @@ class CardSelector : AppCompatActivity() {
             NfcAdapter.ACTION_NDEF_DISCOVERED, NfcAdapter.ACTION_TECH_DISCOVERED, NfcAdapter.ACTION_TAG_DISCOVERED -> {
                 val tagId = intent.extras.getByteArray(NfcAdapter.EXTRA_ID)
                 val tagTag: Tag = intent.extras.getParcelable(NfcAdapter.EXTRA_TAG)
+
+                val transitionAmount = amountMap[tagId.toHex()] ?: Amount(0)
+
                 startActivity(
                         ActivePayment.createIntent(this, Transaction(
-                        Card("iban", "account", Rules("rulesid")),
-                        Account("iban", 1000),
-                        Amount(30))))
-                Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
+                                Card("iban", "account", Rules("rulesid")),
+                                Account("iban", 1000),
+                                transitionAmount)))
             }
         }
     }
