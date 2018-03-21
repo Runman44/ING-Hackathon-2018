@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".CardSelector"
             android:launchMode="singleTask">
+
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
