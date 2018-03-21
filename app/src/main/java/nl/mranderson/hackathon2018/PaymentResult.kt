@@ -1,5 +1,7 @@
 package nl.mranderson.hackathon2018
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import nl.mranderson.hackathon2018.card.CardImageFragment
@@ -23,5 +25,10 @@ class PaymentResult : AppCompatActivity() {
                 .add(R.id.card_fragment_container, cardFragment)
                 .add(R.id.fragment_container, fragment)
                 .commit()
+    }
+
+    companion object {
+        @JvmStatic
+        fun createIntent(context: Context) = Intent(context, PaymentResult::class.java)
     }
 }
