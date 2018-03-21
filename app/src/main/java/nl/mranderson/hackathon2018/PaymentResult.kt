@@ -34,8 +34,8 @@ class PaymentResult : AppCompatActivity() {
     private fun populateAmounts(transaction: Transaction, amountData: SplitPaymentData?) {
         amountData?.let {
             total_amt.text = "${transaction.amount.currency} ${(transaction.amount.valueInCents / 100.0f)}"
-            corporate_amt.text = getString(R.string.amount_value, it.corporateAmount)
-            personal_amt.text = getString(R.string.amount_value, it.personalAmount)
+            corporate_amt_value.text = getString(R.string.amount_value, it.corporateAmount)
+            personal_amt_value.text = getString(R.string.amount_value, it.personalAmount)
         }
     }
 

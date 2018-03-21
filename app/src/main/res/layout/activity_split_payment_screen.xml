@@ -31,25 +31,50 @@
             tools:text="€ 15,24" />
 
         <TextView
-            android:id="@+id/corporate_amt"
+            android:id="@+id/corporate_amt_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/total_amt"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="30dp"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="5,00" />
+            tools:text="€ 5,00" />
 
         <TextView
-            android:id="@+id/personal_amt"
+            android:id="@+id/corporate_amt_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/corporate_amt_value"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/corporate_amt_label"
+            android:textSize="15sp"
+            tools:text="@string/corporate_amt_label" />
+
+        <TextView
+            android:id="@+id/personal_amt_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/total_amt"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="30dp"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="7,24" />
+            tools:text="€ 10,24" />
+
+        <TextView
+            android:id="@+id/personal_amt_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/corporate_amt_label"
+            android:layout_alignBottom="@+id/corporate_amt_label"
+            android:layout_alignStart="@+id/personal_amt_value"
+            android:text="@string/personal_amt_label"
+            android:textSize="15sp"
+            tools:text="@string/personal_amt_label" />
 
     </RelativeLayout>
 
