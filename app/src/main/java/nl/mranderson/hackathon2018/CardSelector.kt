@@ -4,12 +4,10 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.IntentFilter.MalformedMimeTypeException
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
 
