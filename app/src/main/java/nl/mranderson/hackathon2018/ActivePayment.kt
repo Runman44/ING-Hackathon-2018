@@ -3,9 +3,12 @@ package nl.mranderson.hackathon2018
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_active_payment.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
 import nl.mranderson.hackathon2018.data.Transaction
+
 
 class ActivePayment : AppCompatActivity() {
 
@@ -21,13 +24,22 @@ class ActivePayment : AppCompatActivity() {
                     .add(R.id.cardFragment, fragment, "CARDIMAGETAG")
                     .commit()
         }
+
+        showResults()
+    }
+
+    private fun showResults() {
+        paymentTotal.text = getString(R.string.amount_value, "7.00")
+        val options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, paymentTotal, paymentTotal.transitionName)
+        startActivity(PaymentResult.createIntent(this), options.toBundle())
     }
 
     companion object {
         private val KEY_TRANSACTION = "transaction"
 
         @JvmStatic
-        fun createIntent(context: Context, transaction: Transaction) : Intent {
+        fun createIntent(context: Context, transaction: Transaction): Intent {
             return Intent(context, ActivePayment::class.java).also {
                 it.putExtra(KEY_TRANSACTION, transaction)
             }

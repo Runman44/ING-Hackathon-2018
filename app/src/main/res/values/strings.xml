@@ -3,4 +3,8 @@
     <string name="app_text">Why is this project called mr anderson!?!</string>
 
     <string name="amount_value">€%1$s</string>
+
+
+
+    <string name="total_amount_transition_name">total_amount_transition_name</string>
 </resources>
