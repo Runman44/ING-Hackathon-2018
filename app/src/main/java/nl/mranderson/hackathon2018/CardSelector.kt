@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import nl.mranderson.hackathon2018.card.CardFragment
 
+
+
 private const val MIME_TEXT_PLAIN = "text/plain"
 
 class CardSelector : AppCompatActivity() {
