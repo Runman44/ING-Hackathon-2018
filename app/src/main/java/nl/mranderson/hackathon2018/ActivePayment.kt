@@ -29,7 +29,7 @@ class ActivePayment : AppCompatActivity() {
         @JvmStatic
         fun createIntent(context: Context, transaction: Transaction) : Intent {
             return Intent(context, ActivePayment::class.java).also {
-                it.extras.putParcelable(KEY_TRANSACTION, transaction)
+                it.putExtra(KEY_TRANSACTION, transaction)
             }
         }
     }
