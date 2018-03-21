@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import nl.mranderson.hackathon2018.card.CardFragment
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -21,6 +22,15 @@ class CardSelector : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_selector)
+
+        val fragment: CardFragment
+        if (savedInstanceState == null) {
+            fragment = CardFragment()
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.cardFragment, fragment, "CARDTAG")
+                    .commit()
+        }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
 

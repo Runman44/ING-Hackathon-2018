@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 
-
 class CardViewState {
     var data = MutableLiveData<List<Any?>>()
 }
@@ -16,8 +15,7 @@ class VideoViewModelFactory(private val presenter: CardPresenter, private val vi
     }
 }
 
-
-class CardViewModel(val presenter: CardPresenter, val viewState: CardViewState) : ViewModel() {
+class CardViewModel(private val presenter: CardPresenter, val viewState: CardViewState) : ViewModel() {
 
     init {
         presenter.start()
