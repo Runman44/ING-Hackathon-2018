@@ -23,7 +23,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="48sp"
-        tools:text="15,24" />
+        android:padding="16dp"
+        android:background="@drawable/text_background"
+        tools:text="€ 15,24" />
 
     <ProgressBar
         android:id="@+id/progressBar2"

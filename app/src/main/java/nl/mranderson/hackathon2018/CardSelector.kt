@@ -81,7 +81,6 @@ class CardSelector : AppCompatActivity() {
                         Card("iban", "account", Rules("rulesid")),
                         Account("iban", 1000),
                         transitionAmount)))
-                Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
             }
         }
     }
