@@ -29,6 +29,7 @@ class CardFragment : Fragment() {
 
         val adapter = CardSlidePagerAdapter(fragmentManager)
         adapter.addFragment(CardImageFragment())
+        adapter.addFragment(CardImageFragment())
         pager.adapter = adapter
         bindViews()
     }

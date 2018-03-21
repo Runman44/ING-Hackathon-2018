@@ -4,11 +4,12 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.IntentFilter.MalformedMimeTypeException
 import android.nfc.NfcAdapter
+import android.nfc.Tag
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import nl.mranderson.hackathon2018.card.CardFragment
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -20,17 +21,31 @@ class CardSelector : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_selector)
 
+        val fragment: CardFragment
+        if (savedInstanceState == null) {
+            fragment = CardFragment()
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.cardFragment, fragment, "CARDTAG")
+                    .commit()
+        }
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
         // We might be called from the system
         handleIntent(intent)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        intent?.let {
+            handleIntent(it)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
         setupForegroundDispatch(this, nfcAdapter)
-
     }
 
     override fun onPause() {
@@ -39,10 +54,12 @@ class CardSelector : AppCompatActivity() {
         stopForegroundDispatch(this, nfcAdapter)
     }
 
-    private fun handleIntent(intent : Intent) {
+    private fun handleIntent(intent: Intent) {
         when (intent.action) {
             NfcAdapter.ACTION_NDEF_DISCOVERED, NfcAdapter.ACTION_TECH_DISCOVERED, NfcAdapter.ACTION_TAG_DISCOVERED -> {
-                Toast.makeText(this, "Found NFC tag", Toast.LENGTH_SHORT).show()
+                val tagId = intent.extras.getByteArray(NfcAdapter.EXTRA_ID)
+                val tagTag: Tag = intent.extras.getParcelable(NfcAdapter.EXTRA_TAG)
+                Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -55,20 +72,10 @@ class CardSelector : AppCompatActivity() {
 
         val pendingIntent = PendingIntent.getActivity(activity.applicationContext, 0, intent, 0)
 
-        // Notice that this is the same filter as in our manifest.
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(NfcAdapter.ACTION_NDEF_DISCOVERED)
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT)
-        try {
-            intentFilter.addDataType(MIME_TEXT_PLAIN)
-        } catch (e: MalformedMimeTypeException) {
-            throw RuntimeException("Check your mime type.")
-        }
+        val techIntentFilter = IntentFilter()
+        techIntentFilter.addAction(NfcAdapter.ACTION_TECH_DISCOVERED)
 
-        val filters = arrayOf(intentFilter)
-        val techList = arrayOf<Array<String>>()
-
-        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList)
+        adapter.enableForegroundDispatch(activity, pendingIntent, null, null)
     }
 
     private fun stopForegroundDispatch(activity: Activity, adapter: NfcAdapter?) {
