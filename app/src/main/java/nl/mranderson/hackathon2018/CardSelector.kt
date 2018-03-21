@@ -70,7 +70,7 @@ class CardSelector : AppCompatActivity() {
                 val tagTag: Tag = intent.extras.getParcelable(NfcAdapter.EXTRA_TAG)
                 startActivity(
                         ActivePayment.createIntent(this, Transaction(
-                        Card("iban", "account", Rules()),
+                        Card("iban", "account", Rules("rulesid")),
                         Account("iban", 1000),
                         Amount(30))))
                 Toast.makeText(this, "Found NFC tag ${tagId.contentToString()} ${tagTag}", Toast.LENGTH_SHORT).show()
