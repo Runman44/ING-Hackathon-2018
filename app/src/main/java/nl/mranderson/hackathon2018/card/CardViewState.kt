@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 import nl.mranderson.hackathon2018.data.Card
 
 class CardViewState {
-    var data = MutableLiveData<List<Card>>()
+    var data = MutableLiveData<ArrayList<Card>>()
 }
 
 @Suppress("UNCHECKED_CAST")
