@@ -24,6 +24,8 @@ class CardFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
+    private lateinit var listener: ViewPager.OnPageChangeListener
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewState = CardViewState()
@@ -32,7 +34,14 @@ class CardFragment : Fragment() {
 
         adapter = CardSlidePagerAdapter(fragmentManager)
         pager.adapter = adapter
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        // Disable clip to padding
+        pager.clipToPadding = false
+        // set padding manually, the more you set the padding the more you see of prev & next page
+        pager.setPadding(110, 0, 110, 0)
+        // sets a margin b/w individual pages to ensure that there is a gap b/w them
+        pager.pageMargin = 2
+        pager.offscreenPageLimit = 3
+        listener = object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(arg0: Int) {}
 
@@ -45,9 +54,16 @@ class CardFragment : Fragment() {
                 card_name.text = card.name
                 card_days.text = createDaysString(card)
             }
-        })
+        }
+        pager.addOnPageChangeListener(listener)
 
         bindViews()
+    }
+
+    fun updateCard(updatedRuleAmount: Int) {
+        val card = getCard()
+        card.rules.amount.valueInCents = updatedRuleAmount
+        card_days.text = createDaysString(card)
     }
 
     private fun bindViews() {
@@ -61,11 +77,9 @@ class CardFragment : Fragment() {
                 val cardImageFragment = CardImageFragment()
                 cardImageFragment.card = card
                 adapter.addFragment(cardImageFragment)
-                card_name.text = card.name
-                card_days.text = createDaysString(card)
-
             }
             adapter.notifyDataSetChanged()
+            listener.onPageSelected(0)
         }
     }
 
@@ -122,4 +136,5 @@ class CardFragment : Fragment() {
             list.add(fragment)
         }
     }
+
 }
