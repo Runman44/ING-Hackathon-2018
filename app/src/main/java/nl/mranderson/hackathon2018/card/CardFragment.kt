@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,17 +41,23 @@ class CardFragment : Fragment() {
     private fun showData(cards: List<Card>?) {
         if (cards != null) {
             for (card in cards) {
-                adapter.addFragment(CardImageFragment())
+                val cardImageFragment = CardImageFragment()
+                cardImageFragment.card = card
+                adapter.addFragment(cardImageFragment)
 
             }
             adapter.notifyDataSetChanged()
         }
     }
 
-    class CardSlidePagerAdapter(supportFragmentManager: FragmentManager?) : FragmentStatePagerAdapter(supportFragmentManager) {
-        private var list: ArrayList<Fragment> = ArrayList()
+    fun getCard(): Card {
+        return adapter.getItem(pager.currentItem).card
+    }
 
-        override fun getItem(position: Int): Fragment {
+    class CardSlidePagerAdapter(supportFragmentManager: FragmentManager?) : FragmentPagerAdapter(supportFragmentManager) {
+        private var list: ArrayList<CardImageFragment> = ArrayList()
+
+        override fun getItem(position: Int): CardImageFragment {
             return list[position]
         }
 
@@ -59,7 +65,7 @@ class CardFragment : Fragment() {
             return list.size
         }
 
-        fun addFragment(fragment: Fragment) {
+        fun addFragment(fragment: CardImageFragment) {
             list.add(fragment)
         }
     }

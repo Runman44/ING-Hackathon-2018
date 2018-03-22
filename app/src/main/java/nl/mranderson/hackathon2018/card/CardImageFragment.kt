@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import nl.mranderson.hackathon2018.R
+import nl.mranderson.hackathon2018.data.Card
 
 class CardImageFragment : Fragment() {
 
@@ -13,5 +14,7 @@ class CardImageFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_card_image, container, false)
     }
+
+    lateinit var card: Card
 }
 

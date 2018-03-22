@@ -33,6 +33,7 @@ class ActivePayment : AppCompatActivity() {
         val options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, paymentTotal, paymentTotal.transitionName)
         startActivity(PaymentResult.createIntent(this, transaction), options.toBundle())
+        finish()
     }
 
     override fun onResume() {
