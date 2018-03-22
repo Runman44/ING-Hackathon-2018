@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class CardWithoutRule(val name: String,
+data class CardWithoutRule(val name: String, val memberId: String,
                            val rule: String) : Parcelable

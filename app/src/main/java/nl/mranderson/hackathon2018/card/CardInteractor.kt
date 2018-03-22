@@ -30,7 +30,7 @@ class CardInteractor : CardContract.Interactor {
                             Amount((task2.result.get("amount") as String).toInt()),
                             week)
 
-                    cards.add(Card(response.name, rule))
+                    cards.add(Card(response.name, response.memberId, rule))
 
                     val response = CardResponse()
                     response.cards = cards
@@ -52,8 +52,9 @@ class CardInteractor : CardContract.Interactor {
 
                     for (document in task.result) {
                         val name = document.data.get("name") as String
+                        val memberId = document.data.get("memberId") as String
                         val ruleId = document.data.get("ruleId") as String
-                        cards2.add(CardWithoutRule(name, ruleId))
+                        cards2.add(CardWithoutRule(name, memberId, ruleId))
                     }
 
                     val response2 = CardWithoutRuleResponse()

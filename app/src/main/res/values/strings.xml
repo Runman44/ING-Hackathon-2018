@@ -2,6 +2,7 @@
     <string name="app_name">SplitPay</string>
     <string name="app_text">Why is this project called mr anderson!?!</string>
     <string name="amount_value">€%1$s</string>
+    <string name="amount_value_dynamic">%1$s %2$.2f</string>
     <string name="total_amount_transition_name">total_amount_transition_name</string>
     <string name="corporate_amt_label">Corporate amount</string>
     <string name="personal_amt_label">Personal amount</string>
