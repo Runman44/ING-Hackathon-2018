@@ -40,6 +40,7 @@ class CardFragment : Fragment() {
 
     private fun showData(cards: List<Card>?) {
         if (cards != null) {
+            progressBar2.visibility = View.GONE
             for (card in cards) {
                 val cardImageFragment = CardImageFragment()
                 cardImageFragment.card = card
