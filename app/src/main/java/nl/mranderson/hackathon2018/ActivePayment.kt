@@ -14,6 +14,7 @@ import nl.mranderson.hackathon2018.card.CardImageFragment
 import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Transaction
 import nl.mranderson.hackathon2018.data.User
+import java.util.*
 
 const val KEY_TRANSACTION = "transaction"
 
@@ -60,22 +61,60 @@ class ActivePayment : AppCompatActivity() {
 
     private fun doACall(transaction: Transaction) {
         val db = FirebaseFirestore.getInstance()
+        db.collection("accounts").document(transaction.card.rules.accountId)
+                .get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val balance = task.result.get("balance") as Long
+
+                val corporateAmount = transaction.card.rules.amount
+                val amountToSubtract = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
+                val updatedBalance = balance - amountToSubtract
+                val data = HashMap<String, Any>()
+                data.put("balance", updatedBalance)
+                db.document("accounts/" + transaction.card.rules.accountId).set(data, SetOptions.merge())
+                updateTransactionForCorporate(amountToSubtract, transaction)
+                if (transaction.amount.valueInCents < corporateAmount.valueInCents) {
+                    showResults(transaction)
+                } else {
+                    subtractFromPrivate(transaction)
+                }
+            }
+        }
+    }
+
+    private fun updateTransactionForCorporate(amountToSubtract: Int, transaction: Transaction) {
+        val db = FirebaseFirestore.getInstance()
+        val transactionsRef = db.collection("transactions")
+        val data = HashMap<String, Any>()
+        data.put("amount", amountToSubtract)
+        data.put("date", Date())
+        data.put("description", "Lunch Paid by Igloo")
+        data.put("fromAccount", transaction.card.rules.accountId)
+        data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
+        transactionsRef.add(data)
+    }
+
+    private fun subtractFromPrivate(transaction: Transaction) {
+        // Stage 2 if the amount is too high
+        val db = FirebaseFirestore.getInstance()
         val membersRef = db.collection("members")
         val query = membersRef.whereEqualTo("authId", User.authId)
         query.get().addOnCompleteListener({ task ->
             if (task.isSuccessful) {
                 for (document in task.result) {
-                    val blah = document.get("accountId") as String
-                    db.document("accounts/" + blah).get().addOnCompleteListener { task2 ->
+                    val accountId = document.get("accountId") as String
+                    db.document("accounts/" + accountId).get().addOnCompleteListener { task2 ->
                         if (task2.isSuccessful) {
                             val balance = task2.result.get("balance") as Long
                             val corporateAmount = transaction.card.rules.amount
-                            val updateRuleValue = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
-                            val updatedBalance = balance - updateRuleValue
+                            val amountToSubtract = getUpdatePrivateValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
+                            val updatedBalance = balance - amountToSubtract
                             val data = HashMap<String, Any>()
                             data.put("balance", updatedBalance)
-                            db.document("accounts/" + blah).set(data, SetOptions.merge())
+                            db.document("accounts/" + accountId).set(data, SetOptions.merge())
 
+                            val accountName = task2.result.get("name") as String
+                            updateTransactionForPrivate(amountToSubtract, accountId, accountName)
                             showResults(transaction)
                         }
                     }
@@ -84,10 +123,25 @@ class ActivePayment : AppCompatActivity() {
         })
     }
 
+    private fun updateTransactionForPrivate(amountToSubtract: Int, accountId: String, accountName: String) {
+        val db = FirebaseFirestore.getInstance()
+        val transactionsRef = db.collection("transactions")
+        val data = HashMap<String, Any>()
+        data.put("amount", amountToSubtract)
+        data.put("date", Date())
+        data.put("description", "Lunch Paid by " + accountName)
+        data.put("fromAccount", accountId)
+        data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
+        transactionsRef.add(data)
+    }
+
     private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {
         val difference = ruleAmount - transactionAmount
         return if (difference < 0) ruleAmount else difference
     }
+
+    private fun getUpdatePrivateValue(transactionAmount: Int, ruleAmount: Int) =
+            transactionAmount - ruleAmount
 
     private fun getAmountString(amount: Amount): String =
             getString(R.string.amount_value_dynamic, amount.currency, (amount.valueInCents / 100.0f))
