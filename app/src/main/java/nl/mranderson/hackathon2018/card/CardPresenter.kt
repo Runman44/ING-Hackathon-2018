@@ -21,17 +21,9 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
         disposable.dispose()
     }
 
-    private fun handleResponse(videoResponse: CardResponse) {
-//        videoViewState.isLoading.postValue(false)
-//        val items = videoResponse.items
-//        if (videoResponse.exception != null) {
-//            videoViewState.isFailed.postValue(true)
-//        }
-//        if (items != null && items.isNotEmpty()) {
-//            videoViewState.data.postValue(items)
-//        } else {
-//            videoViewState.isEmpty.postValue(true)
-//        }
+    private fun handleResponse(cardResponse: CardResponse) {
+        val cards = cardResponse.cards
+        viewState.data.postValue(cards)
     }
 
     private fun handleException(throwable: Throwable) {

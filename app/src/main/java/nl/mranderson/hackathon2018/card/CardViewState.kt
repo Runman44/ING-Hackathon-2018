@@ -3,9 +3,10 @@ package nl.mranderson.hackathon2018.card
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import nl.mranderson.hackathon2018.data.Card
 
 class CardViewState {
-    var data = MutableLiveData<List<Any?>>()
+    var data = MutableLiveData<List<Card>>()
 }
 
 @Suppress("UNCHECKED_CAST")

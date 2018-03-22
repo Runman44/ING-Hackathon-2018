@@ -6,9 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Card(val iban: String,
-                val accountId: String,
-                val rules: Rules) : Parcelable
-
-
-
+data class Week(val monday: Boolean, val tuesday: Boolean, val wednesday: Boolean, val thursday: Boolean, val friday: Boolean, val saturday: Boolean, val sunday: Boolean) : Parcelable

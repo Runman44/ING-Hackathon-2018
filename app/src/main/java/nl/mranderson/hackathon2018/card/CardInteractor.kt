@@ -1,44 +1,52 @@
 package nl.mranderson.hackathon2018.card
 
-import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Single
+import nl.mranderson.hackathon2018.data.*
 
 
 class CardInteractor : CardContract.Interactor {
 
     override fun getData(url: String): Single<CardResponse> {
         return Single.create {
+            val db = FirebaseFirestore.getInstance()
+            val cardsRef = db.collection("cards")
+            val query = cardsRef.whereEqualTo("authId", User.authId)
 
-            val mAuth = FirebaseAuth.getInstance()
-            var id : String?
-            mAuth.signInWithEmailAndPassword("test@ing.com", "hack123")
-                    .addOnCompleteListener({ task ->
-                        if (task.isSuccessful) {
-                            Log.d("SAYWUT", "YES")
-                            // Sign in success, update UI with the signed-in user's information
-                            val user = mAuth.currentUser
-                            id = user?.uid
+            query.get().addOnCompleteListener({ task ->
+                if (task.isSuccessful) {
+                    val cards = ArrayList<Card>()
+                    for (document in task.result) {
+                        val get = document.get("rules")
+                        val documentId = (get as ArrayList<*>)[0]
+                        val rulesRef = db.document("rules/" + documentId)
+                        rulesRef.get().addOnCompleteListener({ task2 ->
+                            if (task2.isSuccessful) {
 
-                            val db = FirebaseFirestore.getInstance()
-                            val citiesRef = db.collection("cards")
-                            // Create a query against the collection.
-                            val query = citiesRef.whereEqualTo("authId", id)
+                                val week = Week(task2.result.get("monday") as Boolean,
+                                        task2.result.get("tuesday") as Boolean,
+                                        task2.result.get("wednesday") as Boolean,
+                                        task2.result.get("thursday") as Boolean,
+                                        task2.result.get("friday") as Boolean,
+                                        task2.result.get("saturday") as Boolean,
+                                        task2.result.get("sunday") as Boolean)
 
-                            query.get().addOnCompleteListener({ task2 ->
-                                if (task2.isSuccessful) {
-                                    for (document in task2.result) {
-                                        Log.d("SAYWUT", document.id + " => " + document.data)
-                                        val response = CardResponse()
-                                        it.onSuccess(response)
-                                    }
-                                }
-                            })
-                        } else {
-                            Log.d("SAYWUT", "FAILED")
-                        }
-                    })
+                                val rule = Rules(task2.result.get("name") as String,
+                                        task2.result.get("accumulate") as Boolean,
+                                        Amount((task2.result.get("amount") as String).toInt()),
+                                week)
+
+                                cards.add(Card("accountId", "iban", rule))
+                            }
+                        })
+                    }
+
+                    val response = CardResponse()
+                    response.cards = cards
+                    it.onSuccess(response)
+
+                }
+            })
         }
     }
 }
