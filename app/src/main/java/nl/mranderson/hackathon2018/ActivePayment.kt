@@ -146,7 +146,7 @@ class ActivePayment : AppCompatActivity() {
 
     private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {
         val difference = transactionAmount - ruleAmount
-        return if (difference > 0) ruleAmount else Math.abs(difference)
+        return if (difference >= 0) ruleAmount else transactionAmount
     }
 
     private fun getUpdatePrivateValue(transactionAmount: Int, ruleAmount: Int) =
