@@ -1,18 +1,15 @@
 package nl.mranderson.hackathon2018.card
 
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import nl.mranderson.hackathon2018.data.Card
 
 
 class CardPresenter(private val viewState: CardViewState, private val model: CardInteractor) : CardContract.Presenter {
 
-     private lateinit var disposable: Disposable
+    private lateinit var disposable: Disposable
 
     fun start() {
         disposable = model.getCard("")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(this::getRules, this::handleException)
     }
 
@@ -24,9 +21,7 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
         val cards = cardResponse.cards
         if (cards != null) {
             for (cardWithoutRule in cards) {
-                disposable = model.getRules(cardWithoutRule)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
+                model.getRules(cardWithoutRule)
                         .subscribe(this::handleResponse, this::handleException)
             }
         }
@@ -34,10 +29,18 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
 
     private fun handleResponse(cardResponse: CardResponse) {
         val cards = cardResponse.cards
-        viewState.data.postValue(cards)
+        val data = viewState.data.value
+
+        if (data == null) {
+            viewState.data.postValue(cards as ArrayList<Card>)
+        } else if (cards != null) {
+            for (card in cards) {
+                data.add(card)
+            }
+            viewState.data.postValue(data)
+        }
     }
 
     private fun handleException(throwable: Throwable) {
-
     }
 }
