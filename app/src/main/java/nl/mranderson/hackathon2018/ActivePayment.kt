@@ -82,13 +82,24 @@ class ActivePayment : AppCompatActivity() {
         }
     }
 
+    private fun getMemberNameFromId(memberId: String): String {
+        var memberName = memberId
+        val db = FirebaseFirestore.getInstance()
+        db.document("members/" + memberId).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                memberName = task.result.get("name") as String
+            }
+        }
+        return memberName
+    }
+
     private fun updateTransactionForCorporate(amountToSubtract: Int, transaction: Transaction) {
         val db = FirebaseFirestore.getInstance()
         val transactionsRef = db.collection("transactions")
         val data = HashMap<String, Any>()
         data.put("amount", amountToSubtract)
         data.put("date", Date())
-        data.put("description", "Lunch Paid by Igloo")
+        data.put("description", "Lunch Paid by " + getMemberNameFromId(transaction.card.memberId))
         data.put("fromAccount", transaction.card.rules.accountId)
         data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
         transactionsRef.add(data)
@@ -113,8 +124,7 @@ class ActivePayment : AppCompatActivity() {
                             data.put("balance", updatedBalance)
                             db.document("accounts/" + accountId).set(data, SetOptions.merge())
 
-                            val accountName = task2.result.get("name") as String
-                            updateTransactionForPrivate(amountToSubtract, accountId, accountName)
+                            updateTransactionForPrivate(amountToSubtract, accountId)
                             showResults(transaction)
                         }
                     }
@@ -123,13 +133,13 @@ class ActivePayment : AppCompatActivity() {
         })
     }
 
-    private fun updateTransactionForPrivate(amountToSubtract: Int, accountId: String, accountName: String) {
+    private fun updateTransactionForPrivate(amountToSubtract: Int, accountId: String) {
         val db = FirebaseFirestore.getInstance()
         val transactionsRef = db.collection("transactions")
         val data = HashMap<String, Any>()
         data.put("amount", amountToSubtract)
         data.put("date", Date())
-        data.put("description", "Lunch Paid by " + accountName)
+        data.put("description", "Subway")
         data.put("fromAccount", accountId)
         data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
         transactionsRef.add(data)
