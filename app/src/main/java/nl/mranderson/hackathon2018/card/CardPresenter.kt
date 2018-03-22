@@ -35,9 +35,9 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
             viewState.data.value = (cards as ArrayList<Card>)
         } else if (cards != null) {
             for (card in cards) {
-                data.add(card)
+                viewState.data.value = data
             }
-            viewState.data.value = data
+
         }
     }
 
