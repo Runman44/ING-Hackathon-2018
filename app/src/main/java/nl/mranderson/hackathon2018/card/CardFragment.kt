@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_list.*
 import nl.mranderson.hackathon2018.R
 import nl.mranderson.hackathon2018.data.Amount
@@ -57,6 +58,11 @@ class CardFragment : Fragment() {
             }
         }
         pager.addOnPageChangeListener(listener)
+
+        logout.setOnLongClickListener {
+            FirebaseAuth.getInstance().signOut()
+            true
+        }
 
         bindViews()
     }
