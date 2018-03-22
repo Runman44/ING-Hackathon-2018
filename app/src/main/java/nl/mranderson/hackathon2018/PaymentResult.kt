@@ -112,14 +112,15 @@ class PaymentResult : AppCompatActivity() {
         transaction.let {
             total_amt.text = getAmountString(it.amount)
 
-            val corporateAmount = transaction.card.rules.amount
+            var corporateAmount = transaction.card.rules.amount
+            if (it.amount.valueInCents < corporateAmount.valueInCents) {
+                corporateAmount = it.amount
+            }
 
             val personalAmount = Amount(it.amount.valueInCents - corporateAmount.valueInCents)
 
             corporate_amt_value.text = getAmountString(corporateAmount)
             personal_amt_value.text = if (personalAmount.valueInCents > 0) getAmountString(personalAmount) else getString(R.string.amount_value, "0.00")
-
-            updateRuleAmount(it)
         }
 
     }
@@ -129,28 +130,15 @@ class PaymentResult : AppCompatActivity() {
         val corporateAmount = transaction.card.rules.amount
 
         val updateRuleValue = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
-        val intent = Intent()
-        intent.putExtra(UPDATED_RULE_AMOUNT, updateRuleValue)
-        setResult(Activity.RESULT_OK, intent)
+        val resultIntent = Intent()
+        resultIntent.putExtra(UPDATED_RULE_AMOUNT, updateRuleValue)
+        setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }
 
     private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {
-        val difference = ruleAmount - transactionAmount
-        return if (difference < 0) 0 else difference
-    }
-
-    private fun updateRuleAmount(transaction: Transaction) {
-        val totalAmount = transaction.amount.valueInCents
-
-        val ruleAmount = transaction.card.rules.amount.valueInCents
-
-        val difference = ruleAmount - totalAmount
-        if (difference < 0) {
-            transaction.card.rules.amount.valueInCents = 0
-        } else {
-            transaction.card.rules.amount.valueInCents = difference
-        }
+        val difference = transactionAmount - ruleAmount
+        return if (difference >= 0) 0 else Math.abs(difference)
     }
 
     private fun getAmountString(amount: Amount): String =

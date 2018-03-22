@@ -44,8 +44,11 @@ class ActivePayment : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PAYMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK && intent != null) {
-            setResult(Activity.RESULT_OK, intent)
+        if (requestCode == PAYMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val updatedAmount = data.extras.getInt(UPDATED_RULE_AMOUNT)
+            val resultIntent = Intent()
+            resultIntent.putExtra(UPDATED_RULE_AMOUNT, updatedAmount)
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
         super.onActivityResult(requestCode, resultCode, data)

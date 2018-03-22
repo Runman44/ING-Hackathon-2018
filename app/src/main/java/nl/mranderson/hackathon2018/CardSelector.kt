@@ -123,8 +123,8 @@ class CardSelector : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == TRANSACTION_REQUEST_CODE && resultCode == Activity.RESULT_OK && intent != null) {
-            updateRuleValue(intent)
+        if (requestCode == TRANSACTION_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            updateRuleValue(data)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
