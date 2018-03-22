@@ -1,5 +1,7 @@
 package nl.mranderson.hackathon2018
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +14,8 @@ import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Transaction
 
 const val KEY_TRANSACTION = "transaction"
+
+const val PAYMENT_REQUEST_CODE = 6
 
 class ActivePayment : AppCompatActivity() {
 
@@ -29,11 +33,19 @@ class ActivePayment : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private fun showResults(transaction: Transaction) {
         val options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, paymentTotal, paymentTotal.transitionName)
-        startActivity(PaymentResult.createIntent(this, transaction), options.toBundle())
-        finish()
+        startActivityForResult(PaymentResult.createIntent(this, transaction), PAYMENT_REQUEST_CODE, options.toBundle())
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PAYMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK && intent != null) {
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResume() {

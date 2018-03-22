@@ -19,6 +19,9 @@ import nl.mranderson.hackathon2018.data.toHex
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
+const val TRANSACTION_REQUEST_CODE = 9
+const val UPDATED_RULE_AMOUNT = "updatedRuleAmount"
+
 class CardSelector : AppCompatActivity() {
     private val amountMap = HashMap<String, Amount>()
 
@@ -90,11 +93,11 @@ class CardSelector : AppCompatActivity() {
 
                 val transitionAmount = amountMap[tagId.toHex()] ?: Amount(0)
 
-                startActivity(
+                startActivityForResult(
                         ActivePayment.createIntent(this, Transaction(
                                 fragment.getCard(),
                                 Account("iban", 1000),
-                                transitionAmount)))
+                                transitionAmount)), TRANSACTION_REQUEST_CODE)
             }
         }
     }
@@ -118,5 +121,18 @@ class CardSelector : AppCompatActivity() {
 
         adapter.disableForegroundDispatch(activity)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == TRANSACTION_REQUEST_CODE && resultCode == Activity.RESULT_OK && intent != null) {
+            updateRuleValue(intent)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun updateRuleValue(intent: Intent) {
+        val updatedRuleAmount = intent.getIntExtra(UPDATED_RULE_AMOUNT, 0)
+        fragment.getCard().rules.amount.valueInCents = updatedRuleAmount
+    }
+
 
 }
