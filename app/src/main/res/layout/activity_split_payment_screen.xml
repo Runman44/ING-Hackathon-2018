@@ -22,10 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/text_background"
+            android:background="@drawable/text_background_white"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_check_circle_black_24dp"
+            android:drawableTint="@android:color/holo_green_light"
+            android:elevation="8dp"
             android:gravity="center_horizontal"
             android:padding="16dp"
-            android:textSize="48sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:transitionName="@string/total_amount_transition_name"
             tools:text="€ 15,24" />
@@ -34,24 +38,24 @@
             android:id="@+id/corporate_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_background_white"
-            android:layout_marginLeft="45dp"
-            android:elevation="8dp"
-            android:visibility="invisible"
             android:layout_below="@id/total_amt"
-            android:layout_marginTop="30dp">
-
-        <TextView
-            android:id="@+id/corporate_amt_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/text_background_white"
-            android:gravity="center"
-            android:minWidth="130dp"
-            android:padding="8dp"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:text="€ 5,00" />
+            android:elevation="8dp"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/corporate_amt_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_background_white"
+                android:gravity="center"
+                android:minWidth="130dp"
+                android:padding="8dp"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="€ 5,00" />
 
         </FrameLayout>
 
@@ -72,13 +76,13 @@
             android:id="@+id/personal_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_background_white"
-            android:layout_marginRight="45dp"
             android:layout_alignParentRight="true"
-            android:visibility="invisible"
-            android:elevation="8dp"
             android:layout_below="@id/total_amt"
-            android:layout_marginTop="30dp">
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/text_background_white"
+            android:elevation="8dp"
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/personal_amt_value"

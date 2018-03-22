@@ -19,9 +19,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@drawable/text_background"
+        android:elevation="8dp"
+        android:background="@drawable/text_background_white"
         android:padding="16dp"
-        android:textSize="48sp"
+        android:textSize="30sp"
+        android:drawableStart="@drawable/ic_check_circle_black_24dp"
+        android:drawableTint="@android:color/holo_green_light"
+        android:drawablePadding="16dp"
         android:textStyle="bold"
         android:transitionName="@string/total_amount_transition_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,5 +45,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paymentTotal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar2"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Processing"/>
 
 </android.support.constraint.ConstraintLayout>
