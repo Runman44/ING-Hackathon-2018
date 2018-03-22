@@ -2,17 +2,14 @@ package nl.mranderson.hackathon2018
 
 import android.animation.Animator
 import android.animation.AnimatorSet
-import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.transition.Transition
 import android.view.View
-import android.view.animation.AnimationSet
 import kotlinx.android.synthetic.main.activity_split_payment_screen.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
 import nl.mranderson.hackathon2018.data.Amount
@@ -38,8 +35,8 @@ class PaymentResult : AppCompatActivity() {
 
                 corporate_container.y = total_amt.y
                 personal_container.y = total_amt.y
-                corporate_container.x = (total_amt.x + total_amt.width/2) - corporate_container.width/2
-                personal_container.x = (total_amt.x + total_amt.width/2) - personal_container.width/2
+                corporate_container.x = (total_amt.x + total_amt.width / 2) - corporate_container.width / 2
+                personal_container.x = (total_amt.x + total_amt.width / 2) - personal_container.width / 2
                 corporate_container.visibility = View.VISIBLE
                 personal_container.visibility = View.VISIBLE
                 personal_amt_value.alpha = 0f
@@ -130,6 +127,25 @@ class PaymentResult : AppCompatActivity() {
 
             corporate_amt_value.text = getAmountString(corporateAmount)
             personal_amt_value.text = if (personalAmount.valueInCents > 0) getAmountString(personalAmount) else getString(R.string.amount_value, "0.00")
+
+            updateRuleAmount(it)
+        }
+
+        Handler().postDelayed({
+            finish()
+        }, 3000)
+    }
+
+    private fun updateRuleAmount(transaction: Transaction) {
+        val totalAmount = transaction.amount.valueInCents
+
+        val ruleAmount = transaction.card.rules.amount.valueInCents
+
+        val difference = ruleAmount - totalAmount
+        if (difference < 0) {
+            transaction.card.rules.amount.valueInCents = 0
+        } else {
+            transaction.card.rules.amount.valueInCents = difference
         }
     }
 
