@@ -78,15 +78,6 @@ class PaymentResult : AppCompatActivity() {
 
                 })
 
-//
-//                corporate_amt.translationX = (total_amt.x + total_amt.width/2) - corporate_amt.x
-//                corporate_amt.translationY = (total_amt.y + total_amt.height/2) - corporate_amt.y
-//                corporate_amt.animate()
-//                        .alpha(1f)
-//                        .translationX(0f)
-//                        .translationY(0f)
-//                        .setDuration(2000)
-
             }
 
             override fun onTransitionResume(transition: Transition?) {
