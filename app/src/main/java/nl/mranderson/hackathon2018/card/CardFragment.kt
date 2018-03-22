@@ -69,9 +69,8 @@ class CardFragment : Fragment() {
     }
 
     fun updateCard(updatedRuleAmount: Int) {
-        val card = getCard()
-        card.rules.amount.valueInCents = updatedRuleAmount
-        card_amount_left.text = doubleDecimalsForRohan(card.rules.amount) + " EUR"
+        val amount = Amount(valueInCents = updatedRuleAmount)
+        card_amount_left.text = doubleDecimalsForRohan(amount) + " EUR"
     }
 
     private fun bindViews() {
