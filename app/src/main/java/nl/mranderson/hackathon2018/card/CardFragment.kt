@@ -57,6 +57,12 @@ class CardFragment : Fragment() {
         bindViews()
     }
 
+    fun updateCard(updatedRuleAmount: Int) {
+        val card = getCard()
+        card.rules.amount.valueInCents = updatedRuleAmount
+        card_days.text = createDaysString(card)
+    }
+
     private fun bindViews() {
         viewModel.viewState.data.observe(this, Observer { cards -> showData(cards) })
     }
@@ -128,4 +134,5 @@ class CardFragment : Fragment() {
             list.add(fragment)
         }
     }
+
 }

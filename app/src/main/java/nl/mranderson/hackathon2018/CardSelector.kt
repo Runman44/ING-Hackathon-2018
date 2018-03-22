@@ -131,7 +131,7 @@ class CardSelector : AppCompatActivity() {
 
     private fun updateRuleValue(intent: Intent) {
         val updatedRuleAmount = intent.getIntExtra(UPDATED_RULE_AMOUNT, 0)
-        fragment.getCard().rules.amount.valueInCents = updatedRuleAmount
+        fragment.updateCard(updatedRuleAmount)
     }
 
 
