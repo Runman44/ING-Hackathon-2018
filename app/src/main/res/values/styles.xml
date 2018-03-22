@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/textColorOpaque</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="android:fontFamily">@font/ingmebold</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
