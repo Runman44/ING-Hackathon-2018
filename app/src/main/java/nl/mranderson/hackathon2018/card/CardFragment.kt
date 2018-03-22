@@ -24,6 +24,8 @@ class CardFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
+    private lateinit var listener: ViewPager.OnPageChangeListener
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewState = CardViewState()
@@ -39,7 +41,7 @@ class CardFragment : Fragment() {
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
         pager.pageMargin = 2
         pager.offscreenPageLimit = 3
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        listener = object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(arg0: Int) {}
 
@@ -52,7 +54,8 @@ class CardFragment : Fragment() {
                 card_name.text = card.name
                 card_days.text = createDaysString(card)
             }
-        })
+        }
+        pager.addOnPageChangeListener(listener)
 
         bindViews()
     }
@@ -74,10 +77,9 @@ class CardFragment : Fragment() {
                 val cardImageFragment = CardImageFragment()
                 cardImageFragment.card = card
                 adapter.addFragment(cardImageFragment)
-                card_name.text = card.name
-                card_days.text = createDaysString(card)
             }
             adapter.notifyDataSetChanged()
+            listener.onPageSelected(0)
         }
     }
 
