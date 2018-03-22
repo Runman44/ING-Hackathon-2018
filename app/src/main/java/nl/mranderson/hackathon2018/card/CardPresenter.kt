@@ -32,12 +32,12 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
         val data = viewState.data.value
 
         if (data == null) {
-            viewState.data.postValue(cards as ArrayList<Card>)
+            viewState.data.value = (cards as ArrayList<Card>)
         } else if (cards != null) {
             for (card in cards) {
                 data.add(card)
             }
-            viewState.data.postValue(data)
+            viewState.data.value = data
         }
     }
 
