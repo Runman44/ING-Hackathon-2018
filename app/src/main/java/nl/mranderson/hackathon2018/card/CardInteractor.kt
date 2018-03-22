@@ -44,7 +44,7 @@ class CardInteractor : CardContract.Interactor {
         return Single.create {
             val db = FirebaseFirestore.getInstance()
             val cardsRef = db.collection("cards")
-            val query = cardsRef.whereEqualTo("authId", User.authId)
+            val query = cardsRef.whereEqualTo("memberId", Member.memberId)
 
             query.get().addOnCompleteListener({ task ->
                 if (task.isSuccessful) {

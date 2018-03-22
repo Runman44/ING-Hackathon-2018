@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import nl.mranderson.hackathon2018.CardSelector
+import nl.mranderson.hackathon2018.data.Member
 import nl.mranderson.hackathon2018.data.User
 import java.util.*
 
@@ -37,9 +39,24 @@ class LoginActivity : AppCompatActivity() {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
                 User.authId = user?.uid
-                val intent = Intent(this, CardSelector::class.java)
-                startActivity(intent)
-                finish()
+                //TODO could do call here.
+                val db = FirebaseFirestore.getInstance()
+                val membersRef = db.collection("members")
+                val query = membersRef.whereEqualTo("authId", User.authId)
+                query.get().addOnCompleteListener({ task ->
+                    if (task.isSuccessful) {
+
+                        for(document in task.result) {
+                            Member.memberId = document.id
+                        }
+                        val intent = Intent(this, CardSelector::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                })
+
+
+
             } else {
                 // Sign in failed, check response for error code
                 // ...
