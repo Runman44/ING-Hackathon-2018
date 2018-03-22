@@ -3,10 +3,10 @@ package nl.mranderson.hackathon2018
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.transition.Transition
 import android.view.View
@@ -122,9 +122,22 @@ class PaymentResult : AppCompatActivity() {
             updateRuleAmount(it)
         }
 
-        Handler().postDelayed({
-            finish()
-        }, 3000)
+    }
+
+    fun closeScreen(view: View) {
+        val transaction = intent.extras.get(KEY_TRANSACTION) as Transaction
+        val corporateAmount = transaction.card.rules.amount
+
+        val updateRuleValue = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
+        val intent = Intent()
+        intent.putExtra(UPDATED_RULE_AMOUNT, updateRuleValue)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {
+        val difference = ruleAmount - transactionAmount
+        return if (difference < 0) 0 else difference
     }
 
     private fun updateRuleAmount(transaction: Transaction) {

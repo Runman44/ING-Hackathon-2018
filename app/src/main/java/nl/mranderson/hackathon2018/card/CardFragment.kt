@@ -45,10 +45,26 @@ class CardFragment : Fragment() {
                 val cardImageFragment = CardImageFragment()
                 cardImageFragment.card = card
                 adapter.addFragment(cardImageFragment)
+                card_name.text = card.name
+                card_days.text = createDaysString(card)
 
             }
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun createDaysString(card: Card): CharSequence? {
+        val builder = StringBuilder()
+        when {
+            card.rules.week.monday -> builder.append("MON - ")
+            card.rules.week.tuesday -> builder.append("TUE - ")
+            card.rules.week.wednesday -> builder.append("WED - ")
+            card.rules.week.thursday -> builder.append("THU - ")
+            card.rules.week.friday -> builder.append("FRI - ")
+            card.rules.week.saturday -> builder.append("SAT - ")
+            card.rules.week.sunday -> builder.append("SUN")
+        }
+        return builder.toString()
     }
 
     fun getCard(): Card {
