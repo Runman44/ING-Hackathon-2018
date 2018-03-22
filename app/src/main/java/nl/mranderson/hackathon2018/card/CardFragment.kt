@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,21 @@ class CardFragment : Fragment() {
 
         adapter = CardSlidePagerAdapter(fragmentManager)
         pager.adapter = adapter
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            override fun onPageScrollStateChanged(arg0: Int) {}
+
+
+            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
+
+
+            override fun onPageSelected(position: Int) {
+                val card = adapter.getItem(position).card
+                card_name.text = card.name
+                card_days.text = createDaysString(card)
+            }
+        })
+
         bindViews()
     }
 
@@ -55,17 +71,37 @@ class CardFragment : Fragment() {
 
     private fun createDaysString(card: Card): CharSequence? {
         val builder = StringBuilder()
-        when {
-            card.rules.week.monday -> builder.append("MON - ")
-            card.rules.week.tuesday -> builder.append("TUE - ")
-            card.rules.week.wednesday -> builder.append("WED - ")
-            card.rules.week.thursday -> builder.append("THU - ")
-            card.rules.week.friday -> builder.append("FRI - ")
-            card.rules.week.saturday -> builder.append("SAT - ")
-            card.rules.week.sunday -> builder.append("SUN")
+        if (card.rules.week.monday) {
+            builder.append("MON - ")
+        }
+        if (card.rules.week.tuesday) {
+            builder.append("TUE - ")
+        }
+        if (card.rules.week.wednesday) {
+            builder.append("WED - ")
+        }
+        if (card.rules.week.thursday) {
+            builder.append("THU - ")
+        }
+        if (card.rules.week.friday) {
+            builder.append("FRI - ")
+        }
+        if (card.rules.week.saturday) {
+            builder.append("SAT - ")
+        }
+        if (card.rules.week.sunday) {
+            builder.append("SUN - ")
+        }
+
+        builder.append(card.rules.amount.valueInCents / 100.00f)
+        if (card.rules.amount.currency == "€") {
+            builder.append(" EUR")
+        } else {
+            builder.append(card.rules.amount.currency)
         }
         return builder.toString()
     }
+
 
     fun getCard(): Card {
         return adapter.getItem(pager.currentItem).card
