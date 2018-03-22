@@ -5,13 +5,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_active_payment.*
 import nl.mranderson.hackathon2018.card.CardImageFragment
 import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Transaction
+import nl.mranderson.hackathon2018.data.User
 
 const val KEY_TRANSACTION = "transaction"
 
@@ -53,10 +55,38 @@ class ActivePayment : AppCompatActivity() {
         val transaction = intent.getParcelableExtra<Transaction>(KEY_TRANSACTION);
 
         paymentTotal.text = getAmountString(transaction.amount)
+        doACall(transaction)
+    }
 
-        Handler().postDelayed({
-            showResults(transaction)
-        }, 2000)
+    private fun doACall(transaction: Transaction) {
+        val db = FirebaseFirestore.getInstance()
+        val membersRef = db.collection("members")
+        val query = membersRef.whereEqualTo("authId", User.authId)
+        query.get().addOnCompleteListener({ task ->
+            if (task.isSuccessful) {
+                for (document in task.result) {
+                    val blah = document.get("accountId") as String
+                    db.document("accounts/" + blah).get().addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            val balance = task2.result.get("balance") as Long
+                            val corporateAmount = transaction.card.rules.amount
+                            val updateRuleValue = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
+                            val updatedBalance = balance - updateRuleValue
+                            val data = HashMap<String, Any>()
+                            data.put("balance", updatedBalance)
+                            db.document("accounts/" + blah).set(data, SetOptions.merge())
+
+                            showResults(transaction)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {
+        val difference = ruleAmount - transactionAmount
+        return if (difference < 0) ruleAmount else difference
     }
 
     private fun getAmountString(amount: Amount): String =
