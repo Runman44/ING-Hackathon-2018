@@ -54,12 +54,6 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }
                 })
-
-
-
-            } else {
-                // Sign in failed, check response for error code
-                // ...
             }
         }
     }

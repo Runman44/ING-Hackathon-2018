@@ -29,16 +29,7 @@ class CardPresenter(private val viewState: CardViewState, private val model: Car
 
     private fun handleResponse(cardResponse: CardResponse) {
         val cards = cardResponse.cards
-        val data = viewState.data.value
-
-        if (data == null) {
-            viewState.data.value = (cards as ArrayList<Card>)
-        } else if (cards != null) {
-            for (card in cards) {
-                viewState.data.value = data
-            }
-
-        }
+        viewState.data.value = (cards as ArrayList<Card>)
     }
 
     private fun handleException(throwable: Throwable) {

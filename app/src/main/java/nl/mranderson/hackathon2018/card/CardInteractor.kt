@@ -30,7 +30,7 @@ class CardInteractor : CardContract.Interactor {
                             Amount((task2.result.get("amount") as String).toInt()),
                             week)
 
-                    cards.add(Card(response.name, response.memberId, rule))
+                    cards.add(Card(response.memberId,response.name, rule))
 
                     val response = CardResponse()
                     response.cards = cards
