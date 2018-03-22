@@ -82,27 +82,23 @@ class ActivePayment : AppCompatActivity() {
         }
     }
 
-    private fun getMemberNameFromId(memberId: String): String {
-        var memberName = memberId
-        val db = FirebaseFirestore.getInstance()
-        db.document("members/" + memberId).get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                memberName = task.result.get("name") as String
-            }
-        }
-        return memberName
-    }
-
     private fun updateTransactionForCorporate(amountToSubtract: Int, transaction: Transaction) {
         val db = FirebaseFirestore.getInstance()
-        val transactionsRef = db.collection("transactions")
-        val data = HashMap<String, Any>()
-        data.put("amount", amountToSubtract)
-        data.put("date", Date())
-        data.put("description", "Lunch Paid by " + getMemberNameFromId(transaction.card.memberId))
-        data.put("fromAccount", transaction.card.rules.accountId)
-        data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
-        transactionsRef.add(data)
+        db.collection("members").document(transaction.card.memberId).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val memberName = task.result.get("name") as String
+                val db2 = FirebaseFirestore.getInstance()
+                val transactionsRef = db2.collection("transactions")
+                val data = HashMap<String, Any>()
+                data.put("amount", amountToSubtract)
+                data.put("date", Date())
+                data.put("description", "Lunch Paid by " + memberName)
+                data.put("fromAccount", transaction.card.rules.accountId)
+                data.put("toAccount", "ggtqRbS4UtYq9CO0l50Q")
+                transactionsRef.add(data)
+            }
+        }
+
     }
 
     private fun subtractFromPrivate(transaction: Transaction) {
