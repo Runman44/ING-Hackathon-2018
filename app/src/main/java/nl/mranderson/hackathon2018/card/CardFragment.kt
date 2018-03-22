@@ -55,6 +55,7 @@ class CardFragment : Fragment() {
                 val card = adapter.getItem(position).card
                 card_name.text = card.name
                 card_days.text = createDaysString(card)
+                card_amount_left.text = doubleDecimalsForRohan(card.rules.amount) + " EUR"
             }
         }
         pager.addOnPageChangeListener(listener)
@@ -70,7 +71,7 @@ class CardFragment : Fragment() {
     fun updateCard(updatedRuleAmount: Int) {
         val card = getCard()
         card.rules.amount.valueInCents = updatedRuleAmount
-        card_days.text = createDaysString(card)
+        card_amount_left.text = doubleDecimalsForRohan(card.rules.amount) + " EUR"
     }
 
     private fun bindViews() {
