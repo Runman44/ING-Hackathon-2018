@@ -7,4 +7,5 @@
     <color name="colorWindowBackground">#F8EEE7</color>
 
     <color name="textColorOpaque">#333333</color>
+    <color name="textColorLabel">#94618E</color>
 </resources>
