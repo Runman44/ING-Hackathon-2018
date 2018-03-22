@@ -10,6 +10,8 @@ interface CardContract {
     }
 
     interface Interactor {
-        fun getData(url: String): Single<*>
+        fun getCard(url: String): Single<*>
+
+        fun getRules(response: CardWithoutRule) : Single<*>
     }
 }

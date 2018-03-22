@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity
 import android.transition.Explode
 import android.view.Window
 import nl.mranderson.hackathon2018.card.CardFragment
-import nl.mranderson.hackathon2018.data.*
+import nl.mranderson.hackathon2018.data.Account
+import nl.mranderson.hackathon2018.data.Amount
+import nl.mranderson.hackathon2018.data.Transaction
+import nl.mranderson.hackathon2018.data.toHex
 
 private const val MIME_TEXT_PLAIN = "text/plain"
 
@@ -28,6 +31,8 @@ class CardSelector : AppCompatActivity() {
         amountMap["EC1C6AB5"] = Amount(1231)
     }
 
+    private lateinit var fragment: CardFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +45,6 @@ class CardSelector : AppCompatActivity() {
 
         setContentView(R.layout.activity_card_selector)
 
-        val fragment: CardFragment
         if (savedInstanceState == null) {
             fragment = CardFragment()
             supportFragmentManager
@@ -88,7 +92,7 @@ class CardSelector : AppCompatActivity() {
 
                 startActivity(
                         ActivePayment.createIntent(this, Transaction(
-                                Card("iban", "account", Rules("name", false, Amount(5), Week(false, false, false, false, false, false, false))),
+                                fragment.getCard(),
                                 Account("iban", 1000),
                                 transitionAmount)))
             }

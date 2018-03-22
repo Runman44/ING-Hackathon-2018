@@ -1,4 +1,4 @@
-package nl.mranderson.hackathon2018.data
+package nl.mranderson.hackathon2018.card
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
@@ -6,8 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Card(val name: String,
-                val rules: Rules?) : Parcelable
-
-
-
+data class CardWithoutRule(val name: String,
+                           val rule: String) : Parcelable

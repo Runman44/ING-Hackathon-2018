@@ -7,18 +7,29 @@ import io.reactivex.schedulers.Schedulers
 
 class CardPresenter(private val viewState: CardViewState, private val model: CardInteractor) : CardContract.Presenter {
 
-    private val url = "https://www.googleapis.com/youtube/v3/search?part=snippet&fields=items(id(videoId),snippet(title,publishedAt,thumbnails(high(url))))&q=pokemon&type=video&order=date&relevanceLanguage=en-us&max-results=10&key=AIzaSyDlS5wq_ZDcOsHENER-5tsYPej6T3ziNT4&maxResults=25"
-    private lateinit var disposable: Disposable
+     private lateinit var disposable: Disposable
 
     fun start() {
-        disposable = model.getData(url)
+        disposable = model.getCard("")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse, this::handleException)
+                .subscribe(this::getRules, this::handleException)
     }
 
     override fun clear() {
         disposable.dispose()
+    }
+
+    private fun getRules(cardResponse: CardWithoutRuleResponse) {
+        val cards = cardResponse.cards
+        if (cards != null) {
+            for (cardWithoutRule in cards) {
+                disposable = model.getRules(cardWithoutRule)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::handleResponse, this::handleException)
+            }
+        }
     }
 
     private fun handleResponse(cardResponse: CardResponse) {
