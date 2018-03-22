@@ -6,4 +6,5 @@
     <string name="total_amount_transition_name">total_amount_transition_name</string>
     <string name="corporate_amt_label">Company credit</string>
     <string name="personal_amt_label">Personal amount</string>
+    <string name="done">Done</string>
 </resources>

@@ -7,7 +7,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.transition.Transition
 import android.view.View
@@ -121,16 +120,19 @@ class PaymentResult : AppCompatActivity() {
             personal_amt_value.text = if (personalAmount.valueInCents > 0) getAmountString(personalAmount) else getString(R.string.amount_value, "0.00")
 
             updateRuleAmount(it)
-
-            Handler().postDelayed({
-                val updateRuleValue = getUpdateRuleValue(it.amount.valueInCents, corporateAmount.valueInCents)
-                val intent = Intent()
-                intent.putExtra(UPDATED_RULE_AMOUNT, updateRuleValue)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }, 3000)
         }
 
+    }
+
+    fun closeScreen(view: View) {
+        val transaction = intent.extras.get(KEY_TRANSACTION) as Transaction
+        val corporateAmount = transaction.card.rules.amount
+
+        val updateRuleValue = getUpdateRuleValue(transaction.amount.valueInCents, corporateAmount.valueInCents)
+        val intent = Intent()
+        intent.putExtra(UPDATED_RULE_AMOUNT, updateRuleValue)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     private fun getUpdateRuleValue(transactionAmount: Int, ruleAmount: Int): Int {

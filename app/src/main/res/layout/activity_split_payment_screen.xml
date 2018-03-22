@@ -11,9 +11,20 @@
         android:layout_height="250dp"
         android:layout_alignParentTop="true" />
 
+    <Button
+        android:id="@+id/button_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/text_background_white"
+        android:onClick="closeScreen"
+        android:text="@string/done" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/button_done"
         android:layout_below="@id/cardFragment"
         android:paddingBottom="10dp">
 
@@ -66,12 +77,12 @@
             android:layout_alignStart="@+id/corporate_container"
             android:layout_below="@+id/corporate_container"
             android:layout_marginTop="12dp"
-            android:textAllCaps="true"
-            android:textColor="@color/textColorLabel"
-            android:textStyle="bold"
             android:minWidth="130dp"
             android:text="@string/corporate_amt_label"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorLabel"
             android:textSize="15sp"
+            android:textStyle="bold"
             tools:text="@string/corporate_amt_label" />
 
         <FrameLayout
@@ -106,12 +117,12 @@
             android:layout_alignBaseline="@+id/corporate_amt_label"
             android:layout_alignBottom="@+id/corporate_amt_label"
             android:layout_alignStart="@+id/personal_container"
-            android:textAllCaps="true"
-            android:textColor="@color/textColorLabel"
-            android:textStyle="bold"
             android:minWidth="130dp"
             android:text="@string/personal_amt_label"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorLabel"
             android:textSize="15sp"
+            android:textStyle="bold"
             tools:text="@string/personal_amt_label" />
 
     </RelativeLayout>
