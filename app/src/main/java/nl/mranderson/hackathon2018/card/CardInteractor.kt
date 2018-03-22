@@ -25,7 +25,8 @@ class CardInteractor : CardContract.Interactor {
                             task2.result.get("saturday") as Boolean,
                             task2.result.get("sunday") as Boolean)
 
-                    val rule = Rules(task2.result.get("name") as String,
+                    val rule = Rules(task2.result.get("accountId") as String,
+                            task2.result.get("name") as String,
                             task2.result.get("accumulate") as Boolean,
                             Amount((task2.result.get("amount") as String).toInt()),
                             week)
