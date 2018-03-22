@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
 import nl.mranderson.hackathon2018.R
+import nl.mranderson.hackathon2018.data.Amount
 import nl.mranderson.hackathon2018.data.Card
 
 class CardFragment : Fragment() {
@@ -107,7 +108,8 @@ class CardFragment : Fragment() {
             builder.append("SUN - ")
         }
 
-        builder.append(card.rules.amount.valueInCents / 100.00f)
+
+        builder.append(doubleDecimalsForRohan(card.rules.amount))
         if (card.rules.amount.currency == "€") {
             builder.append(" EUR")
         } else {
@@ -116,6 +118,9 @@ class CardFragment : Fragment() {
         return builder.toString()
     }
 
+    private fun doubleDecimalsForRohan(amount: Amount) : String {
+        return getString(R.string.amount_value_dynamic_with_no_currency, (amount.valueInCents / 100.0f))
+    }
 
     fun getCard(): Card {
         return adapter.getItem(pager.currentItem).card
