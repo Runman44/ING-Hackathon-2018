@@ -15,7 +15,7 @@
 
 ## Project: SplitPay
 
-![home](https://github.com/Runman44/hackathon2018/tree/master/screenshots/homescreen.png "Home")
+![home](https://github.com/Runman44/hackathon2018/blob/master/screenshots/homescreen.png "Home")
 
 #### Purpose
 
@@ -54,6 +54,6 @@ Open the .apk file on your phone and the installation will begin.
 
 ### Screenshots
 
-![home](https://github.com/Runman44/hackathon2018/tree/master/screenshots/homescreen.png "Home")
-![payment](https://github.com/Runman44/hackathon2018/tree/master/screenshots/payment_only_company.png "payment only company")
-![payment split](https://github.com/Runman44/hackathon2018/tree/master/screenshots/payment_split.png "payment split")
+![home](https://github.com/Runman44/hackathon2018/blob/master/screenshots/homescreen.png "Home")
+![payment](https://github.com/Runman44/hackathon2018/blob/master/screenshots/payment_only_company.png "payment only company")
+![payment split](https://github.com/Runman44/hackathon2018/blob/master/screenshots/payment_split.png "payment split")
