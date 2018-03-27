@@ -2,7 +2,7 @@
 
 ### Youtube Aftermovie
 
-[![Aftermovie Hackathon](http://img.youtube.com/vi/29Y_POE8tuw/0.jpg)](https://www.youtube.com/watch?v=58CpXZtQ2G8&feature=youtu.be)
+[![Aftermovie Hackathon](http://img.youtube.com/vi/58CpXZtQ2G8/0.jpg)](https://www.youtube.com/watch?v=58CpXZtQ2G8&feature=youtu.be)
 
 ### Contributions
 
@@ -13,11 +13,9 @@
 + Jairzinno Developer
 + Olaf      Developer
 
-![Group](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/group_photo.jpeg "Group Photo")
-
 ## Project: SplitPay
 
-![Compilation](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/cute_compilation_extra.png "Compilation")
+![home](https://github.com/Runman44/hackaton2018/screenshots/homescreen.png "Home")
 
 #### Purpose
 
@@ -32,6 +30,19 @@ The company will generate a virtual company card where the company can put money
 logs in with the credentials provided by the company. The employee can then pay with NFC with the app. The app then calculates who needs to pay what
 first the amount will be deducted from the company card and if there is overflow then this amount will be deducted from the employee's private account.
 
+#### Completed
+
+This app does work with it own BE. First you need to login with credentials provided from the BE. Then the cards with business rules will be retrived from the BE.
+The app really response to NFC chips and splits the amount evenly. Even the payments are being done on the BE. So almost nothing is mocked.
+
+
+#### Technologies
+
++ Firebase
++ Architecture Components
++ MVP
++ NFC
+
 #### How to install
 
 Open the APK folder and set the .apk file on your phone.
@@ -43,8 +54,6 @@ Open the .apk file on your phone and the installation will begin.
 
 ### Screenshots
 
-![menu](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/menu_screen.png "Menu")
-![question](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/question_screen.png "A/B Screen")
-![action](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/action_1.png "In-Game")
-![action](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/action_2.png "Blocking Elephants")
-![gameover](https://github.com/Runman44/hackaton2016/blob/master/Screenshots/game_over.png "Gameover")
+![home](https://github.com/Runman44/hackaton2018/screenshots/homescreen.png "Home")
+![payment](https://github.com/Runman44/hackaton2018/screenshots/payment_only_company.png "payment only company")
+![payment split](https://github.com/Runman44/hackaton2018/screenshots/payment_split.png "payment split")
