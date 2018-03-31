@@ -48,9 +48,18 @@ The app really response to NFC chips and splits the amount evenly. Even the paym
 Open the APK folder and set the .apk file on your phone.
 Open the .apk file on your phone and the installation will begin.
 
+#### Admin Panel
+
+The admin panel is made in Dart and is a separate project.
+
+https://github.com/Jairzinno/INGHackathon2018
+
+Admin panel can be found here.
+https://ing-hackathon-15939.firebaseapp.com/home
+
 ### Video
 
-[![Movie Hackathon](http://img.youtube.com/vi/lgOh_hUn90Y/0.jpg)](https://www.youtube.com/watch?v=lgOh_hUn90Y)
+[![Movie Hackathon](http://img.youtube.com/vi/HK9ih2O34dU/0.jpg)](https://www.youtube.com/watch?v=HK9ih2O34dU)
 
 ### Screenshots
 
